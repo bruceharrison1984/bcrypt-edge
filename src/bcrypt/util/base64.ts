@@ -1,19 +1,6 @@
-// A base64 implementation for the bcrypt algorithm. This is partly non-standard.
-
-/**
- * bcrypt's own non-standard base64 dictionary.
- * @type {!Array.<string>}
- * @const
- * @inner
- **/
 const BASE64_CODE =
   './ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'.split('');
 
-/**
- * @type {!Array.<number>}
- * @const
- * @inner
- **/
 const BASE64_INDEX = [
   -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
   -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
@@ -25,19 +12,11 @@ const BASE64_INDEX = [
 ];
 
 /**
- * @type {!function(...number):string}
- * @inner
- */
-const stringFromCharCode = String.fromCharCode;
-
-/**
  * Encodes a byte array to base64 with up to len bytes of input.
- * @param {!Array.<number>} b Byte array
- * @param {number} len Maximum input length
- * @returns {string}
- * @inner
+ * @param b Byte array
+ * @param len Maximum input length
  */
-export function base64_encode(b: number[], len: number) {
+export const base64_encode = (b: Int32Array, len: number) => {
   let off = 0,
     c1,
     c2;
@@ -66,16 +45,14 @@ export function base64_encode(b: number[], len: number) {
     rs.push(BASE64_CODE[c2 & 0x3f]);
   }
   return rs.join('');
-}
+};
 
 /**
  * Decodes a base64 encoded string to up to len bytes of output.
- * @param {string} s String to decode
- * @param {number} len Maximum output length
- * @returns {!Array.<number>}
- * @inner
+ * @param s String to decode
+ * @param len Maximum output length
  */
-export function base64_decode(s: string, len: number) {
+export const base64_decode = (s: string, len: number) => {
   const slen = s.length;
   const rs: string[] = [];
 
@@ -96,23 +73,24 @@ export function base64_decode(s: string, len: number) {
     if (c1 == -1 || c2 == -1) break;
     o = (c1 << 2) >>> 0;
     o |= (c2 & 0x30) >> 4;
-    rs.push(stringFromCharCode(o));
+    rs.push(String.fromCharCode(o));
     if (++olen >= len || off >= slen) break;
     code = s.charCodeAt(off++);
     c3 = code < BASE64_INDEX.length ? BASE64_INDEX[code] : -1;
     if (c3 == -1) break;
     o = ((c2 & 0x0f) << 4) >>> 0;
     o |= (c3 & 0x3c) >> 2;
-    rs.push(stringFromCharCode(o));
+    rs.push(String.fromCharCode(o));
     if (++olen >= len || off >= slen) break;
     code = s.charCodeAt(off++);
     c4 = code < BASE64_INDEX.length ? BASE64_INDEX[code] : -1;
     o = ((c3 & 0x03) << 6) >>> 0;
     o |= c4;
-    rs.push(stringFromCharCode(o));
+    rs.push(String.fromCharCode(o));
     ++olen;
   }
-  const res: number[] = [];
-  for (off = 0; off < olen; off++) res.push(rs[off].charCodeAt(0));
+
+  const res = new Int32Array(olen);
+  for (off = 0; off < olen; off++) res[off] = rs[off].charCodeAt(0);
   return res;
-}
+};
