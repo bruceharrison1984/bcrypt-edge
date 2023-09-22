@@ -6,7 +6,7 @@
  * @const
  * @inner
  **/
-var BASE64_CODE =
+const BASE64_CODE =
   './ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'.split('');
 
 /**
@@ -14,7 +14,7 @@ var BASE64_CODE =
  * @const
  * @inner
  **/
-var BASE64_INDEX = [
+const BASE64_INDEX = [
   -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
   -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
   -1, -1, -1, -1, -1, -1, -1, -1, 0, 1, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63,
@@ -28,7 +28,7 @@ var BASE64_INDEX = [
  * @type {!function(...number):string}
  * @inner
  */
-var stringFromCharCode = String.fromCharCode;
+const stringFromCharCode = String.fromCharCode;
 
 /**
  * Encodes a byte array to base64 with up to len bytes of input.
@@ -38,10 +38,11 @@ var stringFromCharCode = String.fromCharCode;
  * @inner
  */
 export function base64_encode(b: number[], len: number) {
-  var off = 0,
-    rs: string[] = [],
+  let off = 0,
     c1,
     c2;
+  const rs: string[] = [];
+
   if (len <= 0 || len > b.length) throw Error('Illegal len: ' + len);
   while (off < len) {
     c1 = b[off++] & 0xff;
@@ -75,10 +76,11 @@ export function base64_encode(b: number[], len: number) {
  * @inner
  */
 export function base64_decode(s: string, len: number) {
-  var off = 0,
-    slen = s.length,
+  const slen = s.length;
+  const rs: string[] = [];
+
+  let off = 0,
     olen = 0,
-    rs: string[] = [],
     c1,
     c2,
     c3,
@@ -110,7 +112,7 @@ export function base64_decode(s: string, len: number) {
     rs.push(stringFromCharCode(o));
     ++olen;
   }
-  var res: number[] = [];
+  const res: number[] = [];
   for (off = 0; off < olen; off++) res.push(rs[off].charCodeAt(0));
   return res;
 }

@@ -24,7 +24,7 @@ suite('Benchmarks', () => {
     let last = null;
     while (s.length < 100) {
       s += '0';
-      var hash = bcryptEdge.hashSync(s, salt);
+      const hash = bcryptEdge.hashSync(s, salt);
       if (hash === last) break;
       last = hash;
     }
@@ -34,7 +34,7 @@ suite('Benchmarks', () => {
   test.each([8, 9, 10, 11, 12, 13, 14, 15])(
     'Hashes Match for %i hash iterations',
     (rounds) => {
-      var salt = bcryptEdge.genSaltSync(rounds);
+      const salt = bcryptEdge.genSaltSync(rounds);
       console.log(`\n** Using ${rounds} rounds with salt ${salt} **`);
       const [bcryptHash, bcryptHashTime] = testSync(salt, bcrypt);
       const [bcryptEdgeHash, bcryptedgeHashTime] = testSync(salt, bcryptEdge);

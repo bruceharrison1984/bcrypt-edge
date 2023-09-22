@@ -9,21 +9,21 @@ export const GENSALT_DEFAULT_LOG2_ROUNDS = 10;
  * @const
  * @inner
  */
-var BLOWFISH_NUM_ROUNDS = 16;
+const BLOWFISH_NUM_ROUNDS = 16;
 
 /**
  * @type {number}
  * @const
  * @inner
  */
-var MAX_EXECUTION_TIME = 100;
+const MAX_EXECUTION_TIME = 100;
 
 /**
  * @type {Array.<number>}
  * @const
  * @inner
  */
-var P_ORIG = [
+const P_ORIG = [
   0x243f6a88, 0x85a308d3, 0x13198a2e, 0x03707344, 0xa4093822, 0x299f31d0,
   0x082efa98, 0xec4e6c89, 0x452821e6, 0x38d01377, 0xbe5466cf, 0x34e90c6c,
   0xc0ac29b7, 0xc97c50dd, 0x3f84d5b5, 0xb5470917, 0x9216d5d9, 0x8979fb1b,
@@ -34,7 +34,7 @@ var P_ORIG = [
  * @const
  * @inner
  */
-var S_ORIG = [
+const S_ORIG = [
   0xd1310ba6, 0x98dfb5ac, 0x2ffd72db, 0xd01adfb7, 0xb8e1afed, 0x6a267e96,
   0xba7c9045, 0xf12c7f99, 0x24a19947, 0xb3916cf7, 0x0801f2e2, 0x858efc16,
   0x636920d8, 0x71574e69, 0xa458fea3, 0xf4933d7e, 0x0d95748f, 0x728eb658,
@@ -213,7 +213,7 @@ var S_ORIG = [
  * @const
  * @inner
  */
-var C_ORIG = [
+const C_ORIG = [
   0x4f727068, 0x65616e42, 0x65686f6c, 0x64657253, 0x63727944, 0x6f756274,
 ];
 
@@ -227,7 +227,7 @@ var C_ORIG = [
  */
 function _encipher(lr: number[], off: number, P: Int32Array, S: Int32Array) {
   // This is our bottleneck: 1714/1905 ticks / 90% - see profile.txt
-  var n,
+  let n,
     l = lr[off],
     r = lr[off + 1];
 
@@ -351,6 +351,7 @@ function _encipher(lr: number[], off: number, P: Int32Array, S: Int32Array) {
  * @inner
  */
 function _streamtoword(data: number[], offp: number) {
+  // eslint-disable-next-line no-var
   for (var i = 0, word = 0; i < 4; ++i)
     (word = (word << 8) | (data[offp] & 0xff)),
       (offp = (offp + 1) % data.length);
@@ -364,11 +365,13 @@ function _streamtoword(data: number[], offp: number) {
  * @inner
  */
 function _key(key: number[], P: Int32Array, S: Int32Array) {
-  var offset = 0,
+  const plen = P.length;
+  const slen = S.length;
+
+  let offset = 0,
     lr = [0, 0],
-    plen = P.length,
-    slen = S.length,
     sw;
+  // eslint-disable-next-line no-var
   for (var i = 0; i < plen; i++)
     (sw = _streamtoword(key, offset)),
       (offset = sw.offp),
@@ -388,11 +391,13 @@ function _key(key: number[], P: Int32Array, S: Int32Array) {
  * @inner
  */
 function _ekskey(data: number[], key: number[], P: Int32Array, S: Int32Array) {
-  var offp = 0,
+  const plen = P.length;
+  const slen = S.length;
+  let offp = 0,
     lr = [0, 0],
-    plen = P.length,
-    slen = S.length,
     sw;
+
+  // eslint-disable-next-line no-var
   for (var i = 0; i < plen; i++)
     (sw = _streamtoword(key, offp)), (offp = sw.offp), (P[i] = P[i] ^ sw.key);
   offp = 0;
@@ -430,9 +435,9 @@ function _ekskey(data: number[], key: number[], P: Int32Array, S: Int32Array) {
  * @inner
  */
 function _crypt(b: number[], salt: number[], rounds: number) {
-  var cdata = C_ORIG.slice(),
-    clen = cdata.length,
-    err;
+  const cdata = C_ORIG.slice(),
+    clen = cdata.length;
+  let err: Error;
 
   // Validate
   if (rounds < 4 || rounds > 31) {
@@ -448,9 +453,10 @@ function _crypt(b: number[], salt: number[], rounds: number) {
   }
   rounds = (1 << rounds) >>> 0;
 
-  var P = new Int32Array(P_ORIG),
-    S = new Int32Array(S_ORIG),
-    i = 0,
+  const P = new Int32Array(P_ORIG),
+    S = new Int32Array(S_ORIG);
+
+  let i = 0,
     j;
 
   _ekskey(salt, b, P, S);
@@ -462,7 +468,7 @@ function _crypt(b: number[], salt: number[], rounds: number) {
    */
   function next() {
     if (i < rounds) {
-      var start = Date.now();
+      const start = Date.now();
       for (; i < rounds; ) {
         i = i + 1;
         _key(b, P, S);
@@ -472,7 +478,7 @@ function _crypt(b: number[], salt: number[], rounds: number) {
     } else {
       for (i = 0; i < 64; i++)
         for (j = 0; j < clen >> 1; j++) _encipher(cdata, j << 1, P, S);
-      var ret = [];
+      const ret = [];
       for (i = 0; i < clen; i++)
         ret.push(((cdata[i] >> 24) & 0xff) >>> 0),
           ret.push(((cdata[i] >> 16) & 0xff) >>> 0),
@@ -482,7 +488,8 @@ function _crypt(b: number[], salt: number[], rounds: number) {
     }
   }
 
-  var res;
+  let res;
+  // eslint-disable-next-line no-constant-condition
   while (true) if (typeof (res = next()) !== 'undefined') return res || [];
 }
 
@@ -497,14 +504,14 @@ function _crypt(b: number[], salt: number[], rounds: number) {
  * @inner
  */
 export function _hash(s: string, salt?: string) {
-  var err;
+  let err;
   if (typeof s !== 'string' || typeof salt !== 'string') {
     err = Error('Invalid string / salt: Not a string');
     throw err;
   }
 
   // Validate the salt
-  var minor: string, offset;
+  let minor: string, offset;
   if (salt.charAt(0) !== '$' || salt.charAt(1) !== '2') {
     err = Error('Invalid salt version: ' + salt.substring(0, 2));
     throw err;
@@ -527,13 +534,13 @@ export function _hash(s: string, salt?: string) {
     err = Error('Missing salt rounds');
     throw err;
   }
-  var r1 = parseInt(salt.substring(offset, offset + 1), 10) * 10,
+  const r1 = parseInt(salt.substring(offset, offset + 1), 10) * 10,
     r2 = parseInt(salt.substring(offset + 1, offset + 2), 10),
     rounds = r1 + r2,
     real_salt = salt.substring(offset + 3, offset + 25);
   s += minor >= 'a' ? '\x00' : '';
 
-  var passwordb = utf8Array(s),
+  const passwordb = utf8Array(s),
     saltb = base64_decode(real_salt, BCRYPT_SALT_LEN);
 
   /**
@@ -543,7 +550,7 @@ export function _hash(s: string, salt?: string) {
    * @inner
    */
   function finish(bytes: number[]) {
-    var res: string[] = [];
+    const res: string[] = [];
     res.push('$2');
     if (minor >= 'a') res.push(minor);
     res.push('$');

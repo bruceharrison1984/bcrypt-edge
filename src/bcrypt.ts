@@ -21,7 +21,7 @@ export const genSaltSync = (rounds?: number) => {
 
   if (rounds < 4) rounds = 4;
   else if (rounds > 31) rounds = 31;
-  var salt = [];
+  const salt = [];
   salt.push('$2a$');
   if (rounds < 10) salt.push('0');
   salt.push(rounds.toString());
@@ -53,8 +53,8 @@ export const hashSync = (value: string | Buffer, salt?: string | number) => {
  * @inner
  */
 const safeStringCompare = (known: string, unknown: string) => {
-  var diff = known.length ^ unknown.length;
-  for (var i = 0; i < known.length; ++i) {
+  let diff = known.length ^ unknown.length;
+  for (let i = 0; i < known.length; ++i) {
     diff |= known.charCodeAt(i) ^ unknown.charCodeAt(i);
   }
   return diff === 0;

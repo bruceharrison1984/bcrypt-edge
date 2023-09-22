@@ -1,8 +1,8 @@
 /** Calculates the byte length of a string encoded as UTF8. */
 export function utf8Length(value: string) {
-  var len = 0,
+  let len = 0,
     c = 0;
-  for (var i = 0; i < value.length; ++i) {
+  for (let i = 0; i < value.length; ++i) {
     c = value.charCodeAt(i);
     if (c < 128) len += 1;
     else if (c < 2048) len += 2;
@@ -19,11 +19,11 @@ export function utf8Length(value: string) {
 
 /** Converts a string to an array of UTF8 bytes. */
 export function utf8Array(value: string) {
-  var offset = 0,
+  let offset = 0,
     c1,
     c2;
-  var buffer = new Array(utf8Length(value));
-  for (var i = 0, k = value.length; i < k; ++i) {
+  const buffer = new Array(utf8Length(value));
+  for (let i = 0, k = value.length; i < k; ++i) {
     c1 = value.charCodeAt(i);
     if (c1 < 128) {
       buffer[offset++] = c1;
