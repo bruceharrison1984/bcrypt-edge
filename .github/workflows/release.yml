@@ -71,7 +71,7 @@ jobs:
       - name: Download Schedulely artifact
         uses: actions/download-artifact@v3
         with:
-          name: schedulely-package
+          name: bcrypt-edge-package
       - name: Publish to NPM
         run: npm publish --access public
         env:
