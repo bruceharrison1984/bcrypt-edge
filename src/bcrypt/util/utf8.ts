@@ -22,7 +22,7 @@ export function utf8Array(value: string) {
   let offset = 0,
     c1,
     c2;
-  const buffer = new Array(utf8Length(value));
+  const buffer = new Int32Array(utf8Length(value));
   for (let i = 0, k = value.length; i < k; ++i) {
     c1 = value.charCodeAt(i);
     if (c1 < 128) {

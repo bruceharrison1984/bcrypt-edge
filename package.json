@@ -1,6 +1,6 @@
 {
   "name": "bcrypt-edge",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "module": "dist/bcrypt-edge.js",
   "types": "dist/bcrypt-edge.d.ts",
   "description": "Bcrypt implementation specifically for web workers",

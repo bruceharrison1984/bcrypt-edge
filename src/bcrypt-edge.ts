@@ -6,35 +6,34 @@ import {
 import { base64_encode } from './bcrypt/util/base64';
 
 const getRandomValues = (length: number) => {
-  const buffer = new Uint32Array(length);
-  return Array.from(crypto.getRandomValues(buffer));
+  const buffer = new Int32Array(length);
+  return crypto.getRandomValues(buffer);
 };
 
 /**
  * Synchronously generates a salt.
- * @param {number=} rounds Number of rounds to use, defaults to 10 if omitted
- * @returns {string} Resulting salt
- * @throws {Error} If a random fallback is required but not set
+ * @param rounds Number of rounds to use, defaults to 10 if omitted
+ * @returns Resulting salt
  */
 export const genSaltSync = (rounds?: number) => {
   rounds = rounds || GENSALT_DEFAULT_LOG2_ROUNDS;
 
   if (rounds < 4) rounds = 4;
   else if (rounds > 31) rounds = 31;
-  const salt = [];
-  salt.push('$2a$');
-  if (rounds < 10) salt.push('0');
-  salt.push(rounds.toString());
-  salt.push('$');
-  salt.push(base64_encode(getRandomValues(BCRYPT_SALT_LEN), BCRYPT_SALT_LEN)); // May throw
-  return salt.join('');
+  let salt = '';
+  salt += '$2a$';
+  if (rounds < 10) salt += '0';
+  salt += rounds.toString();
+  salt += '$';
+  salt += base64_encode(getRandomValues(BCRYPT_SALT_LEN), BCRYPT_SALT_LEN); // May thr
+  return salt;
 };
 
 /**
  * Synchronously generates a hash for the given string.
- * @param {string} s String to hash
- * @param {(number|string)=} salt Salt length to generate or salt to use, default to 10
- * @returns {string} Resulting hash
+ * @param s String to hash
+ * @param salt Salt length to generate or salt to use, default to 10
+ * @returns Resulting hash
  */
 export const hashSync = (value: string | Buffer, salt?: string | number) => {
   if (typeof salt === 'undefined') salt = GENSALT_DEFAULT_LOG2_ROUNDS;
@@ -47,9 +46,9 @@ export const hashSync = (value: string | Buffer, salt?: string | number) => {
 
 /**
  * Compares two strings of the same length in constant time.
- * @param {string} known Must be of the correct length
- * @param {string} unknown Must be the same length as `known`
- * @returns {boolean}
+ * @param known Must be of the correct length
+ * @param unknown Must be the same length as `known`
+ * @returns Boolean
  * @inner
  */
 const safeStringCompare = (known: string, unknown: string) => {
@@ -62,10 +61,10 @@ const safeStringCompare = (known: string, unknown: string) => {
 
 /**
  * Synchronously tests a string against a hash.
- * @param {string} s String to compare
- * @param {string} hash Hash to test against
- * @returns {boolean} true if matching, otherwise false
- * @throws {Error} If an argument is illegal
+ * @param s String to compare
+ * @param hash Hash to test against
+ * @returns true if matching, otherwise false
+ * @throws If an argument is illegal
  */
 export const compareSync = (value: string | Buffer, hash: string) => {
   if (typeof value !== 'string' || typeof hash !== 'string')
@@ -79,9 +78,9 @@ export const compareSync = (value: string | Buffer, hash: string) => {
 
 /**
  * Gets the number of rounds used to encrypt the specified hash.
- * @param {string} hash Hash to extract the used number of rounds from
- * @returns {number} Number of rounds used
- * @throws {Error} If `hash` is not a string
+ * @param hash Hash to extract the used number of rounds from
+ * @returns Number of rounds used
+ * @throws If `hash` is not a string
  */
 export const getRounds = (hash: string) => {
   if (typeof hash !== 'string')
@@ -91,9 +90,9 @@ export const getRounds = (hash: string) => {
 
 /**
  * Gets the salt portion from a hash. Does not validate the hash.
- * @param {string} hash Hash to extract the salt from
- * @returns {string} Extracted salt part
- * @throws {Error} If `hash` is not a string or otherwise invalid
+ * @param hash Hash to extract the salt from
+ * @returns Extracted salt part
+ * @throws If `hash` is not a string or otherwise invalid
  */
 export const getSaltSync = (hash: string) => {
   if (typeof hash !== 'string')
