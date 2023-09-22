@@ -20,31 +20,36 @@ export const base64_encode = (b: Int32Array, len: number) => {
   let off = 0,
     c1,
     c2;
-  const rs: string[] = [];
+  let rs = '';
 
   if (len <= 0 || len > b.length) throw Error('Illegal len: ' + len);
+
   while (off < len) {
     c1 = b[off++] & 0xff;
-    rs.push(BASE64_CODE[(c1 >> 2) & 0x3f]);
+    rs += BASE64_CODE[(c1 >> 2) & 0x3f];
     c1 = (c1 & 0x03) << 4;
+
     if (off >= len) {
-      rs.push(BASE64_CODE[c1 & 0x3f]);
+      rs += BASE64_CODE[c1 & 0x3f];
       break;
     }
+
     c2 = b[off++] & 0xff;
     c1 |= (c2 >> 4) & 0x0f;
-    rs.push(BASE64_CODE[c1 & 0x3f]);
+    rs += BASE64_CODE[c1 & 0x3f];
     c1 = (c2 & 0x0f) << 2;
+
     if (off >= len) {
-      rs.push(BASE64_CODE[c1 & 0x3f]);
+      rs += BASE64_CODE[c1 & 0x3f];
       break;
     }
+
     c2 = b[off++] & 0xff;
     c1 |= (c2 >> 6) & 0x03;
-    rs.push(BASE64_CODE[c1 & 0x3f]);
-    rs.push(BASE64_CODE[c2 & 0x3f]);
+    rs += BASE64_CODE[c1 & 0x3f];
+    rs += BASE64_CODE[c2 & 0x3f];
   }
-  return rs.join('');
+  return rs;
 };
 
 /**
@@ -54,7 +59,7 @@ export const base64_encode = (b: Int32Array, len: number) => {
  */
 export const base64_decode = (s: string, len: number) => {
   const slen = s.length;
-  const rs: string[] = [];
+  let rs = '';
 
   let off = 0,
     olen = 0,
@@ -70,23 +75,27 @@ export const base64_decode = (s: string, len: number) => {
     c1 = code < BASE64_INDEX.length ? BASE64_INDEX[code] : -1;
     code = s.charCodeAt(off++);
     c2 = code < BASE64_INDEX.length ? BASE64_INDEX[code] : -1;
+
     if (c1 == -1 || c2 == -1) break;
     o = (c1 << 2) >>> 0;
     o |= (c2 & 0x30) >> 4;
-    rs.push(String.fromCharCode(o));
+    rs += String.fromCharCode(o);
+
     if (++olen >= len || off >= slen) break;
     code = s.charCodeAt(off++);
     c3 = code < BASE64_INDEX.length ? BASE64_INDEX[code] : -1;
+
     if (c3 == -1) break;
     o = ((c2 & 0x0f) << 4) >>> 0;
     o |= (c3 & 0x3c) >> 2;
-    rs.push(String.fromCharCode(o));
+    rs += String.fromCharCode(o);
+
     if (++olen >= len || off >= slen) break;
     code = s.charCodeAt(off++);
     c4 = code < BASE64_INDEX.length ? BASE64_INDEX[code] : -1;
     o = ((c3 & 0x03) << 6) >>> 0;
     o |= c4;
-    rs.push(String.fromCharCode(o));
+    rs += String.fromCharCode(o);
     ++olen;
   }
 
