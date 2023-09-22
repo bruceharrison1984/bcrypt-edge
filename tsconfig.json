@@ -1,0 +1,35 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "lib": ["ESNext"],
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    },
+    "declaration": true,
+    "declarationMap": true,
+    "outDir": "dist",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "moduleResolution": "node",
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "strict": true,
+    "types": [
+      "@cloudflare/workers-types",
+      "vitest/globals",
+      "vitest/importMeta"
+    ]
+  },
+  "include": [
+    "./src/**/*",
+    "./test/*",
+    "vitest-setup.ts",
+    "vitest.config.ts",
+    "test/benchmark/worker.ts",
+    "test/benchmark/miniflare.ts",
+    "test/benchmark.ts"
+  ],
+  "exclude": ["node_modules"]
+}
