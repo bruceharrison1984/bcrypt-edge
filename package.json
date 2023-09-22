@@ -15,7 +15,8 @@
   },
   "scripts": {
     "build": "rollup -c",
-    "test": "vitest"
+    "test": "vitest",
+    "lint": "eslint"
   },
   "files": [
     "dist"
