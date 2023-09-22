@@ -7,6 +7,7 @@ This is an edge/worker conversion for [bcrypt.js](https://github.com/dcodeIO/bcr
 Implementation of Bcrypt specifically for web workers. The following differences can be observed from the source library:
 
 - All `async` methods have been removed. These don't work in a Web Worker environment, so they were removed.
+  - Perhaps there is some method of re-introducing them, but the originals relied upon `process.nextTick`. Additionally in a worker scenario, theoretically each request is isolated anyway so `async` isn't as impactful.
 - Tests are run against the Cloudflare `crypto` compatibility layer via Miniflare
 
 Care was taken to disturb as little as possible with the initial implementation.
