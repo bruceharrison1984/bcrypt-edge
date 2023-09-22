@@ -50,7 +50,11 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: bcrypt-edge-package
-          path: ./
+          path: |
+            ./dist
+            LICENSE
+            package.json
+            README.md
 
   publish-package:
     runs-on: ubuntu-latest
