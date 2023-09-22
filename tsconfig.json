@@ -24,12 +24,9 @@
   },
   "include": [
     "./src/**/*",
-    "./test/*",
+    "./test/*.ts",
     "vitest-setup.ts",
-    "vitest.config.ts",
-    "test/benchmark/worker.ts",
-    "test/benchmark/miniflare.ts",
-    "test/benchmark.ts"
+    "vitest.config.ts"
   ],
   "exclude": ["node_modules"]
 }
