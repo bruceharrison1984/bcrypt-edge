@@ -6,8 +6,8 @@ import {
 import { base64_encode } from './bcrypt/util/base64';
 
 const getRandomValues = (length: number) => {
-  const buffer = new Uint32Array(length);
-  return Array.from(crypto.getRandomValues(buffer));
+  const buffer = new Int32Array(length);
+  return crypto.getRandomValues(buffer);
 };
 
 /**

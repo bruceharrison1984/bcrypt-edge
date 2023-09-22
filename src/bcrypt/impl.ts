@@ -324,7 +324,7 @@ function _encipher(lr: number[], off: number, P: Int32Array, S: Int32Array) {
  * @returns {{key: number, offp: number}}
  * @inner
  */
-function _streamtoword(data: number[], offp: number) {
+function _streamtoword(data: Int32Array, offp: number) {
   // eslint-disable-next-line no-var
   for (var i = 0, word = 0; i < 4; ++i)
     (word = (word << 8) | (data[offp] & 0xff)),
@@ -338,7 +338,7 @@ function _streamtoword(data: number[], offp: number) {
  * @param {Array.<number>} S
  * @inner
  */
-function _key(key: number[], P: Int32Array, S: Int32Array) {
+function _key(key: Int32Array, P: Int32Array, S: Int32Array) {
   const plen = P.length;
   const slen = S.length;
 
@@ -364,7 +364,12 @@ function _key(key: number[], P: Int32Array, S: Int32Array) {
  * @param {Array.<number>} S
  * @inner
  */
-function _ekskey(data: number[], key: number[], P: Int32Array, S: Int32Array) {
+function _ekskey(
+  data: Int32Array,
+  key: Int32Array,
+  P: Int32Array,
+  S: Int32Array
+) {
   const plen = P.length;
   const slen = S.length;
   let offp = 0,
@@ -408,7 +413,7 @@ function _ekskey(data: number[], key: number[], P: Int32Array, S: Int32Array) {
  * @returns {!Array.<number>|undefined} Resulting bytes if callback has been omitted, otherwise `undefined`
  * @inner
  */
-function _crypt(b: number[], salt: number[], rounds: number) {
+function _crypt(b: Int32Array, salt: Int32Array, rounds: number) {
   const cdata = C_ORIG.slice(),
     clen = cdata.length;
   let err: Error;
@@ -523,7 +528,7 @@ export function _hash(s: string, salt?: string) {
    * @returns {string}
    * @inner
    */
-  function finish(bytes: number[]) {
+  function finish(bytes: Int32Array) {
     const res: string[] = [];
     res.push('$2');
     if (minor >= 'a') res.push(minor);
