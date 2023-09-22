@@ -1,6 +1,5 @@
 import ts from 'rollup-plugin-ts';
 import { defineConfig } from 'rollup';
-import copy from 'rollup-plugin-copy';
 
 const rollupOptions = defineConfig({
   input: 'src/bcrypt.ts',
