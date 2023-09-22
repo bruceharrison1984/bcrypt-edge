@@ -2,7 +2,7 @@ import ts from 'rollup-plugin-ts';
 import { defineConfig } from 'rollup';
 
 const rollupOptions = defineConfig({
-  input: 'src/bcrypt.ts',
+  input: 'src/bcrypt-edge.ts',
   output: {
     dir: 'dist',
     format: 'esm',

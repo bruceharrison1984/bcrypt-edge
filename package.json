@@ -1,8 +1,8 @@
 {
   "name": "bcrypt-edge",
   "version": "0.0.1",
-  "module": "dist/bcrypt.js",
-  "types": "dist/bcrypt.d.ts",
+  "module": "dist/bcrypt-edge.js",
+  "types": "dist/bcrypt-edge.d.ts",
   "description": "Bcrypt implementation specifically for web workers",
   "keywords": [
     "encryption",
@@ -15,7 +15,6 @@
   },
   "scripts": {
     "build": "rollup -c",
-    "dev": "rollup -c -w",
     "test": "vitest"
   },
   "files": [

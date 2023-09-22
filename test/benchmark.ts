@@ -1,5 +1,5 @@
 import * as bcrypt from 'bcrypt';
-import bcryptEdge from '../src/bcrypt';
+import bcryptEdge from '../src/bcrypt-edge';
 import { expect, test, suite } from 'vitest';
 
 // This is a best effort to compare the two libraries. It is difficult to do since they cannot run in the same environment as one another.
