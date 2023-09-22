@@ -43,7 +43,7 @@ bcrypt.compareSync('not_bacon', hash); // false
 
 ## Benchmarks
 
-Running bcrypt-edge in Miniflare against the original bcrypt package, the benchmarks are as follows.
+Running bcrypt-edge in Miniflare against the original bcrypt package, the benchmarks are as follows. It is very likely that platform specific inhancements could be made to improve performace of `bcrypt-edge`.
 
 | Library     | Rounds | Hash Time |
 | ----------- | ------ | --------- |
