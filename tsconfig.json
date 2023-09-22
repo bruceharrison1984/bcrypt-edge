@@ -8,7 +8,6 @@
       "@/*": ["src/*"]
     },
     "declaration": true,
-    "declarationMap": true,
     "outDir": "dist",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
@@ -20,7 +19,8 @@
       "@cloudflare/workers-types",
       "vitest/globals",
       "vitest/importMeta"
-    ]
+    ],
+    "sourceMap": false
   },
   "include": [
     "./src/**/*",

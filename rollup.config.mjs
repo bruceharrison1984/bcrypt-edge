@@ -6,7 +6,7 @@ const rollupOptions = defineConfig({
   output: {
     dir: 'dist',
     format: 'esm',
-    sourcemap: 'inline',
+    sourcemap: false,
   },
   plugins: [
     ts({
