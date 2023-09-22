@@ -9,12 +9,6 @@ const rollupOptions = defineConfig({
     sourcemap: 'inline',
   },
   plugins: [
-    copy({
-      targets: [
-        { src: './README.md', dest: './' },
-        { src: './LICENSE', dest: './' },
-      ],
-    }),
     ts({
       cwd: '.',
       transpiler: 'swc',
