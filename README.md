@@ -1,5 +1,8 @@
 # bcrypt-edge
 
+[![npm](https://img.shields.io/npm/dw/bcrypt-edge?label=bcrypt-edge)
+](https://www.npmjs.com/package/bcrypt-edge)
+
 ESM Edge/worker conversion for [bcrypt.js](https://github.com/dcodeIO/bcrypt.js).
 
 ## Description
