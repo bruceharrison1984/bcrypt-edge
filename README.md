@@ -7,7 +7,7 @@ ESM Edge/worker conversion for [bcrypt.js](https://github.com/dcodeIO/bcrypt.js)
 
 ## Description
 
-This is a re-implementation of Bcrypt specifically for web workers. The following differences can be observed from the source library:
+This is a re-implementation of Bcrypt specifically for web workers, **in particular Cloudflare**. The following differences can be observed from the source library:
 
 - The package is now an ESM, so it can easily be bundled
 - All `async` methods have been removed. These don't work in a Web Worker environment, so they were removed.
