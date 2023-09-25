@@ -4,6 +4,10 @@
   "module": "dist/bcrypt-edge.js",
   "types": "dist/bcrypt-edge.d.ts",
   "description": "Bcrypt implementation specifically for web workers",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bruceharrison1984/bcrypt-edge"
+  },
   "keywords": [
     "encryption",
     "bcrypt",
