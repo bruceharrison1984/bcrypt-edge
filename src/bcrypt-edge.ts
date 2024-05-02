@@ -4,11 +4,7 @@ import {
   _hash,
 } from './bcrypt/impl';
 import { base64_encode } from './bcrypt/util/base64';
-
-const getRandomValues = (length: number) => {
-  const buffer = new Int32Array(length);
-  return crypto.getRandomValues(buffer);
-};
+import { getRandomValues } from 'node:crypto';
 
 /**
  * Synchronously generates a salt.
@@ -25,7 +21,10 @@ export const genSaltSync = (rounds?: number) => {
   if (rounds < 10) salt += '0';
   salt += rounds.toString();
   salt += '$';
-  salt += base64_encode(getRandomValues(BCRYPT_SALT_LEN), BCRYPT_SALT_LEN); // May thr
+  salt += base64_encode(
+    getRandomValues(new Int32Array(BCRYPT_SALT_LEN)),
+    BCRYPT_SALT_LEN
+  ); // May thr
   return salt;
 };
 
