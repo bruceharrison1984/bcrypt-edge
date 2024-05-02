@@ -1,6 +1,6 @@
 {
   "name": "bcrypt-edge",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "type": "module",
   "module": "dist/bcrypt-edge.js",
   "types": "dist/bcrypt-edge.d.ts",
