@@ -19,6 +19,7 @@
     "name": "Bruce Harrison"
   },
   "scripts": {
+    "prepare": "npm run build",
     "build": "rollup -c",
     "test": "vitest",
     "lint": "eslint"
