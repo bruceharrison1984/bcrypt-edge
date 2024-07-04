@@ -21,10 +21,13 @@ jobs:
           cache: "npm"
       - name: Update NPM
         run: npm install -g npm
+
       - name: NPM Install
-        run: npm ci
+        run: npm ci --ignore-scripts
+
       - name: Build
         run: npm run build
+
   test-pr:
     runs-on: ubuntu-latest
     permissions:
@@ -39,7 +42,9 @@ jobs:
           cache: "npm"
       - name: Update NPM
         run: npm install -g npm
+
       - name: NPM Install
-        run: npm ci
+        run: npm ci --ignore-scripts
+
       - name: Run unit tests
         run: npx vitest run
