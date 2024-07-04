@@ -72,10 +72,8 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: bcrypt-edge-package
-      - name: NPM install
-        run: npm i
       - name: Publish to NPM
-        run: npm publish --access public
+        run: npm publish --access public --ignore-scripts
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_PUBLISH_TOKEN}}
 
