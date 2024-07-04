@@ -72,6 +72,8 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: bcrypt-edge-package
+      - name: install rollup globally
+        run: npm i rollup -g
       - name: Publish to NPM
         run: npm publish --access public --ignore-scripts
         env:
