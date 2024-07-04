@@ -72,6 +72,8 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: bcrypt-edge-package
+      - name: NPM install
+        run: npm i
       - name: Publish to NPM
         run: npm publish --access public
         env:
