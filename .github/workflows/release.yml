@@ -43,9 +43,6 @@ jobs:
       - name: Test
         run: npm run test
 
-      - name: Build
-        run: npm run build
-
       - name: Upload package artifact
         uses: actions/upload-artifact@v4
         with:
@@ -55,10 +52,11 @@ jobs:
             LICENSE
             package.json
             README.md
-      - name: Publish to NPM
-        run: npm publish --access public --ignore-scripts
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_PUBLISH_TOKEN}}
+
+      - name: NPM Publish
+        uses: JS-DevTools/npm-publish@v3.1.1
+        with:
+          token: ${{secrets.NPM_PUBLISH_TOKEN}}
 
   ## finalizing the release doesn't depend on Docs deploying because it fails frequently
   finalize-release:
