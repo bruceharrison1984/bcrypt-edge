@@ -23,7 +23,7 @@ jobs:
         run: npm install -g npm
 
       - name: NPM Install
-        run: npm ci --ignore-scripts
+        run: npm i --ignore-scripts
 
       - name: Build
         run: npm run build
