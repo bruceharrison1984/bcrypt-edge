@@ -3,7 +3,7 @@ name: Release Build
 on:
   push:
     tags:
-      - 'v*.*.*'
+      - "v*.*.*"
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
@@ -14,7 +14,7 @@ permissions:
 
 # Allow one concurrent deployment
 concurrency:
-  group: 'pages'
+  group: "pages"
   cancel-in-progress: true
 
 jobs:
@@ -68,7 +68,7 @@ jobs:
 
       - name: Update NPM
         run: npm install -g npm
-      - name: Download Schedulely artifact
+      - name: Download bcrypt-edge artifact
         uses: actions/download-artifact@v3
         with:
           name: bcrypt-edge-package
@@ -85,10 +85,10 @@ jobs:
       ## Checkout so we can apply the new tag
       - uses: actions/checkout@v3
         with:
-          fetch-depth: '0'
+          fetch-depth: "0"
 
       ## Documentation: https://github.com/marvinpinto/action-automatic-releases
-      - uses: 'marvinpinto/action-automatic-releases@latest'
+      - uses: "marvinpinto/action-automatic-releases@latest"
         with:
-          repo_token: '${{ secrets.GITHUB_TOKEN }}'
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
           prerelease: false
