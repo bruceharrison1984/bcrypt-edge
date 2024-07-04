@@ -30,7 +30,9 @@
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20240423.0",
     "@swc/core": "^1.4.17",
+    "@types/bcrypt": "^5.0.2",
     "@typescript-eslint/eslint-plugin": "^7.8.0",
+    "bcrypt": "^5.1.1",
     "eslint": "^8.49.0",
     "eslint-config-prettier": "^9.1.0",
     "prettier": "^3.2.5",
