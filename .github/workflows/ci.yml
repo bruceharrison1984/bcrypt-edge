@@ -3,7 +3,7 @@ name: CI
 on:
   push:
     branches:
-      - '!main'
+      - "!main"
   pull_request:
     branches:
       - main
@@ -18,7 +18,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18.x
-          cache: 'npm'
+          cache: "npm"
       - name: Update NPM
         run: npm install -g npm
       - name: NPM Install
@@ -36,10 +36,12 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18.x
-          cache: 'npm'
+          cache: "npm"
       - name: Update NPM
         run: npm install -g npm
       - name: NPM Install
         run: npm ci
+      - name: Build
+        run: npm run build
       - name: Run unit tests
         run: npx vitest run
