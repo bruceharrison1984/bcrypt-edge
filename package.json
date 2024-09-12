@@ -1,9 +1,7 @@
 {
   "name": "bcrypt-edge",
-  "version": "0.0.6",
+  "version": "0.1.0",
   "type": "module",
-  "module": "dist/bcrypt-edge.js",
-  "types": "dist/bcrypt-edge.d.ts",
   "description": "Bcrypt implementation specifically for web workers",
   "repository": {
     "type": "git",
@@ -19,25 +17,30 @@
     "name": "Bruce Harrison"
   },
   "scripts": {
-    "build": "rollup -c",
+    "build": "unbuild",
     "test": "vitest",
     "lint": "eslint"
   },
+  "exports": {
+    ".": {
+      "import": "./dist/bcrypt-edge.mjs"
+    }
+  },
+  "main": "./dist/bcrypt-edge.mjs",
+  "types": "./dist/bcrypt-edge.d.ts",
   "files": [
     "dist"
   ],
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20240423.0",
-    "@swc/core": "^1.4.17",
     "@types/bcrypt": "^5.0.2",
     "@typescript-eslint/eslint-plugin": "^7.8.0",
     "bcrypt": "^5.1.1",
     "eslint": "^8.49.0",
     "eslint-config-prettier": "^9.1.0",
     "prettier": "^3.2.5",
-    "rollup": "^4.17.2",
-    "rollup-plugin-ts": "^3.4.5",
     "typescript": "^5.4.5",
+    "unbuild": "^2.0.0",
     "vitest": "^1.5.3",
     "vitest-environment-miniflare": "^2.14.2"
   }
