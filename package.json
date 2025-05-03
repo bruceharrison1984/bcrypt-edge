@@ -1,6 +1,6 @@
 {
   "name": "bcrypt-edge",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "module",
   "description": "Bcrypt implementation specifically for web workers",
   "repository": {
