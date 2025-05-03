@@ -1,3 +1,6 @@
+> [!CAUTION]
+> This library is no longer maintained, please consider switching to [bcrypt-ts](https://github.com/Mister-Hope/bcrypt-ts), which is better in every way.
+
 # bcrypt-edge
 
 [![npm](https://img.shields.io/npm/dw/bcrypt-edge?label=bcrypt-edge)
